@@ -14,11 +14,12 @@ datasource db {
 
 model User {
   id    String   @id  @default(uuid())
-  email String
+  email String   @unique
   password String
 
   memberships Membership[]
-  issueMappings issueMapping[]
+  issueMappings IssueMapping[]
+  invitations Invitation[]
 }
 
 model Org {
@@ -28,19 +29,41 @@ model Org {
 
   memberships Membership[]
   boards Board[]
+  invitations Invitation[]
+}
+
+enum InvitationStatus {
+  ACCEPTED
+  PENDING
+  REJECTED
+}
+
+model Invitation {
+  id String @id @default(uuid())
+  email     String
+  role      MembershipRole @default(member)
+  status    InvitationStatus @default(PENDING)
+  
+  orgId     String
+  org       Org @relation(fields: [orgId], references: [id])
+  
+  userId String
+  inviter   User @relation(fields: [userId], references: [id])
+  
+  createdAt DateTime @default(now())
+  @@unique([email, orgId])
 }
 
 enum MembershipRole {
-  MEMBER
-  ADMIN
-  OWNER
+  member
+  admin
 }
 
 model Membership {
   id    String    @id    @default(uuid())
   userId String
   orgId String
-  role MembershipRole  @default(MEMBER)
+  role MembershipRole  
 
   user User @relation(fields: [userId], references: [id])
   org Org @relation(fields: [orgId], references: [id])
@@ -57,7 +80,7 @@ model Issue {
   section Section @relation(fields: [sectionId], references: [id])
 
   comments Comment[]
-  issueMappings issueMapping[]
+  issueMappings IssueMapping[]
 }
 
 model Board {
@@ -87,7 +110,7 @@ model Comment {
   issue Issue @relation(fields: [issueId], references: [id])
 }
 
-model issueMapping {
+model IssueMapping {
   id    String    @id    @default(uuid())
 
   userId String
