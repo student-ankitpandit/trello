@@ -48,7 +48,7 @@ model Invitation {
   org       Org @relation(fields: [orgId], references: [id])
   
   userId String
-  inviter   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id])
   
   createdAt DateTime @default(now())
   @@unique([email, orgId])
@@ -67,6 +67,8 @@ model Membership {
 
   user User @relation(fields: [userId], references: [id])
   org Org @relation(fields: [orgId], references: [id])
+
+  @@unique([userId, orgId])
 }
 
 model Issue {
