@@ -100,7 +100,7 @@ router.patch("/board/:boardId", authMiddleware, async (req, res) => {
   })
 
   if (!board) {
-    return res.status(400).json({
+    return res.status(404).json({
       success: false,
       error: "board not found"
     })
@@ -140,7 +140,7 @@ router.delete("/board/:boardId", authMiddleware, async (req, res) => {
   })
 
   if (!board) {
-    return res.status(400).json({
+    return res.status(404).json({
       success: false,
       error: "board not found"
     })

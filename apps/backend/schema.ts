@@ -1,3 +1,4 @@
+import type { getOriginalNode } from "typescript"
 import { z } from "zod"
 import { string } from "zod/v3"
 
@@ -28,4 +29,22 @@ export const createBoardSchema = z.object({
 
 export const updateBoardSchema = z.object({
   title: z.string()
+})
+
+export const inviteSchema = z.object({
+  email: z.string(),
+  orgId: z.string()
+})
+
+export const acceptInviteSchema = z.object({
+  orgId: z.string()
+})
+
+export const createSectionSchema = z.object({
+  title: z.string(),
+  boardId: z.string()
+})
+
+export const updateSectionScheme = z.object({
+  title: z.string(),
 })

@@ -20,6 +20,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
     const decodedToken = jwt.verify(token, JWT_SECRET) as JwtPayload
     req.id = decodedToken.id
+    req.email = decodedToken.email
 
     next()
   } catch (e: any) {

@@ -45,7 +45,7 @@ model Invitation {
   status    InvitationStatus @default(PENDING)
   
   orgId     String
-  org       Org @relation(fields: [orgId], references: [id])
+  org       Org @relation(fields: [orgId], references: [id], onDelete: Restrict)
   
   userId String
   user   User @relation(fields: [userId], references: [id])
@@ -66,7 +66,7 @@ model Membership {
   role MembershipRole  
 
   user User @relation(fields: [userId], references: [id])
-  org Org @relation(fields: [orgId], references: [id])
+  org Org @relation(fields: [orgId], references: [id], onDelete: Restrict)
 
   @@unique([userId, orgId])
 }
@@ -78,8 +78,8 @@ model Issue {
   boardId String
   sectionId String
 
-  board Board @relation(fields: [boardId], references: [id])
-  section Section @relation(fields: [sectionId], references: [id])
+  board Board @relation(fields: [boardId], references: [id], onDelete: Restrict)
+  section Section @relation(fields: [sectionId], references: [id], onDelete: Restrict)
 
   comments Comment[]
   issueMappings IssueMapping[]
@@ -90,7 +90,7 @@ model Board {
   title String
   orgId String
 
-  org Org @relation(fields: [orgId], references: [id])
+  org Org @relation(fields: [orgId], references: [id], onDelete: Restrict)
   sections Section[]
   issues Issue[]
 }
@@ -100,7 +100,7 @@ model Section {
   title String
   boardId String
 
-  board Board @relation(fields: [boardId], references: [id])
+  board Board @relation(fields: [boardId], references: [id], onDelete: Restrict)
 
   issues Issue[]
 }
@@ -109,15 +109,14 @@ model Comment {
   id String     @id     @default(uuid())
   issueId String
 
-  issue Issue @relation(fields: [issueId], references: [id])
+  issue Issue @relation(fields: [issueId], references: [id], onDelete: Restrict)
 }
 
 model IssueMapping {
   id    String    @id    @default(uuid())
-
   userId String
   issueId String
 
   user User @relation(fields: [userId], references: [id])
-  issue Issue @relation(fields: [issueId], references: [id])
+  issue Issue @relation(fields: [issueId], references: [id], onDelete: Restrict)
 }
