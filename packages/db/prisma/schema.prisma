@@ -15,11 +15,12 @@ datasource db {
 model User {
   id    String   @id  @default(uuid())
   email String   @unique
-  password String
+  password String?
 
   memberships Membership[]
   issueMappings IssueMapping[]
   invitations Invitation[]
+  comments Comment[]
 }
 
 model Org {
@@ -108,8 +109,11 @@ model Section {
 model Comment {
   id String     @id     @default(uuid())
   issueId String
+  comment String
+  userId String?
 
   issue Issue @relation(fields: [issueId], references: [id], onDelete: Restrict)
+  user User? @relation(fields: [userId], references: [id])
 }
 
 model IssueMapping {
