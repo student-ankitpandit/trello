@@ -48,3 +48,13 @@ export const createSectionSchema = z.object({
 export const updateSectionScheme = z.object({
   title: z.string(),
 })
+
+export const issueCreateSchema = z.object({
+  title: z.string(),
+  description: z.string()
+})
+
+export const updateIssueSchema = z.object({
+  title: z.string(),
+  description: z.string()
+})
