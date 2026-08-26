@@ -92,7 +92,7 @@ model Board {
   orgId String
 
   org Org @relation(fields: [orgId], references: [id], onDelete: Restrict)
-  sections Section[]
+  section Section[]
   issues Issue[]
 }
 
