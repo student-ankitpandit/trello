@@ -3,7 +3,7 @@ import { prisma } from "db/client"
 import { authMiddleware } from "../middlewares/authMiddleware"
 import { acceptInviteSchema, inviteSchema } from "../schema"
 import { checkAdminRole } from "../utils/checkAdminRole"
-import { da, id } from "zod/v4/locales"
+import { sendInviteEmail } from "../utils/sendInviteEmail"
 
 const router = express.Router()
 
@@ -73,11 +73,19 @@ router.post("/invite", authMiddleware, async (req, res) => {
   }
 
   //invitation link logic -- can use resend or twilio to send invite link
-  // await sendEmail(data.email, data.orgId, invitationToSent.id)
-
+  const { data: inviteData, error: inviteError} = await sendInviteEmail(data.email, data.orgId, invitationToSent.id)
+  
+  if (inviteError) {
+    return res.status(500).json({
+      success: false,
+      error: "failed to send invite email"
+    })
+  }
+  
   return res.status(200).json({
     success: true,
-    message: "invitation link sent successfully"
+    message: "invitation link sent successfully",
+    data: inviteData
   })
 })
 
