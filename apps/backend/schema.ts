@@ -58,3 +58,11 @@ export const updateIssueSchema = z.object({
   title: z.string(),
   description: z.string()
 })
+
+export const commentCreateSchema = z.object({
+  comment: z.string().min(1)
+})
+
+export const updateCommentSchema = z.object({
+  comment: z.string().min(1)
+})
