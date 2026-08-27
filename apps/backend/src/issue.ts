@@ -101,9 +101,14 @@ router.get("/issue/:sectionId", authMiddleware, async (req, res) => {
       issues: {
         include: {
           issueMappings: {
-            select: {
-              userId: true
-            },
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  email: true,
+                }
+              }
+            }
           },
         },
       }
