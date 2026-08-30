@@ -5,6 +5,7 @@ import boardRoutes from "./src/board.ts"
 import sectionRoutes from "./src/section.ts"
 import issueRoutes from "./src/issue.ts"
 import commentRoutes from "./src/comment.ts"
+import inviteRoutes from "./src/invite.ts"
 
 const app = express()
 app.use(express.json())
@@ -15,6 +16,7 @@ app.use("/api/v1", boardRoutes)
 app.use("/api/v1", sectionRoutes)
 app.use("/api/v1", issueRoutes)
 app.use("/api/v1", commentRoutes)
+app.use("/api/v1", inviteRoutes)
 
 app.listen(3000, () => console.log("server is running on port 3000"))
 
