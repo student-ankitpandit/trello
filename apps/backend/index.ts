@@ -6,8 +6,11 @@ import sectionRoutes from "./src/section.ts"
 import issueRoutes from "./src/issue.ts"
 import commentRoutes from "./src/comment.ts"
 import inviteRoutes from "./src/invite.ts"
+import cors from "cors"
 
 const app = express()
+
+app.use(cors())
 app.use(express.json())
 
 app.use("/api/v1", userRoutes)
@@ -18,5 +21,5 @@ app.use("/api/v1", issueRoutes)
 app.use("/api/v1", commentRoutes)
 app.use("/api/v1", inviteRoutes)
 
-app.listen(3000, () => console.log("server is running on port 3000"))
+app.listen(3001, () => console.log("server is running on port 3001"))
 

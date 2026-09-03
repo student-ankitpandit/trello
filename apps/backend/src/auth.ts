@@ -66,11 +66,11 @@ router.post("/login", async (req, res) => {
       }
     })
 
-    if (!user) {
+    if (!user || !user.password) {
       return res.status(400).json({
-          success: false,
-          error: "user not found"
-        })
+        success: false,
+        error: "user not found"
+      })
     }
 
     const password = bcrypt.compare(data.password, user.password)

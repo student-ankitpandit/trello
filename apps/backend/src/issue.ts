@@ -176,7 +176,8 @@ router.get("/issues", authMiddleware, async (req, res) => {
 
   return res.status(200).json({
     success: false,
-    message: "issues fetched successfully"
+    message: "issues fetched successfully",
+    data: issues
   })
 })
 
@@ -318,9 +319,9 @@ router.put("/issue/move/:issueId/:sectionId", authMiddleware, async (req, res) =
   })
 })
 
-router.delete("/isssue:/issueId", authMiddleware, async (req, res) => {
+router.delete("/isssue/:issueId", authMiddleware, async (req, res) => {
   const userId = req.id
-  const issueId = req.params.IssueId
+  const issueId = req.params.IssueId as string
 
   if(issueId) {
     return res.status(400).json({
